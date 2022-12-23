@@ -8,4 +8,10 @@ export class AuthDto{
     @IsString()
     @IsNotEmpty()
     pass: string;
+
+    @IsString()
+    firstName: string
+
+    @IsString()
+    lastName: string
 }
