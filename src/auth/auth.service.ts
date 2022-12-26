@@ -8,7 +8,7 @@ import * as argon from 'argon2'
 export class AuthService{
     constructor(private prisma: PrismaService){}
 
-    login(){
+    async login(){
         return {msg: "Logged in"};
     }
 
@@ -19,6 +19,8 @@ export class AuthService{
             const user = await this.prisma.user.create({
                 data: {
                     email: dto.email,
+                    firstName: dto.firstName,
+                    lastName: dto.lastName,
                     hash
                 },
                 select:{
@@ -32,7 +34,7 @@ export class AuthService{
             return user;
         }catch(error){
             if(error instanceof PrismaClientKnownRequestError){
-                // P2002 is prisma dulpilcate field error
+                // P2002 is prisma duplicate field error
                 if(error.code === 'P2002'){
                     throw new ForbiddenException(
                         'Credentials already taken'
