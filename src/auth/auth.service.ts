@@ -8,9 +8,32 @@ import * as argon from 'argon2'
 export class AuthService{
     constructor(private prisma: PrismaService){}
 
-    async login(){
-        return {msg: "Logged in"};
+    async login(dto: AuthDto){
+        const user = await this.prisma.user.findUnique({
+            where:{
+                email: dto.email
+            }
+        });
+
+        if(!user){
+            throw new ForbiddenException('Credentials Incorrect')
+        }
+
+        const passMatch = await argon.verify(
+            user.hash,
+            dto.pass
+        )
+
+        if(!passMatch){
+            throw new ForbiddenException('Credentials Incorrect')
+        }
+        
+        delete user.hash
+        return user
     }
+
+
+
 
     async register(dto: AuthDto){
 
@@ -44,4 +67,6 @@ export class AuthService{
         }
 
     }
+
+
 }
