@@ -1,0 +1,11 @@
+-- CreateTable
+CREATE TABLE "Tasks" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "text" TEXT NOT NULL,
+    "day" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "reminder" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "Tasks_pkey" PRIMARY KEY ("id")
+);
