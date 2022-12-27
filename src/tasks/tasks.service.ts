@@ -17,7 +17,7 @@ export class TasksService{
         return task
     }
 
-    async read(id: number){
+    async read(){
         const allTasks = await this.prisma.tasks.findMany()
         return allTasks;
     }
